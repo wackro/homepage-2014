@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>joe griffin</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">		<link rel="icon" type="image/png" href="blockfavicon.png">
+		<link rel="stylesheet" href="css/style.css" />
+		<script src="js/Detector.js"></script>
+		<script src="js/yepnope.1.5.4-min.js"></script>
+	</head>
+	<body>
+
+		<script src="js/2d.js"></script>
+		
+		<div id="basic" style="visibility:hidden;z-index=-1">
+			<h1>JGRIFF.IN</h1>
+			<ul><li><a href="/photography">Photography</a></li><li><a href="/misc">Miscellaneous</a></li><li><a href="#" onclick="toggleContact()">Contact</a></li></ul>
+			<div id="contact"><ul><li><a href="mailto:wackro@gmail.com" id="email">email</a></li><li><a href="http://facebook.com/griffdogg" id="facebook">facebook</a></li><li><a href="http://www.linkedin.com/profile/view?id=71149030" id="linkedIn">linkedin</a></li></ul></div>
+			<p id="basicMessage" style="visibility:hidden">This is the basic version of the site.<br>Try using a browser or graphics card that supports <a href="http://get.webgl.org/">WebGL</a>.
+		</div>
+		
+		<div id="toggle3d" style="visibility:visible;z-index:999" onclick="toggle3d()" onmouseover="toggle3dHover()" onmouseout="toggle3dHover()">
+		</div>
+
+		<script src="js/3d.js"></script>
+	
+	</body>
+</html>
