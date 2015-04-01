@@ -7,8 +7,10 @@ can be seen here: http://jgriff.in/spinny
 drop these into /js
 
 three.min.js  v.63 - https://github.com/mrdoob/three.js/releases/tag/r63
+
 yepnope.1.5.4-min.js - https://github.com/cdnjs/cdnjs/tree/master/ajax/libs/yepnope/1.5.4
 
 # props
 authors of the above dependencies
+
 hwub (http://huwbowles.com) for ShaderGodRays.js
