@@ -4,20 +4,14 @@ if ( Detector.webgl )
 else
 	renderSimple();
 	
-	
 function renderSimple() {
-
 	document.getElementById("basic").style.visibility = "visible";
 	document.getElementById('toggle3d').style.visibility = 'hidden';
 	document.getElementById('basicMessage').style.visibility = 'visible';
-	
 }
 
-
 // load resources then render on callback.
-
 function load3d() {
-	
 	yepnope({
 		load: ['js/three.min.js',
 			'js/ShaderGodRays.js',
@@ -29,21 +23,17 @@ function load3d() {
 			render3d();
 		}
 	});
-	
 }
 
 function renderToggler() {
-
 	var cube, squareMesh, renderer, scene, camera;
 
 	init();
 	animate();
 
 	function init() {
-
 		camera = new THREE.PerspectiveCamera(20, 1, 1, 5000);
 		camera.position.z = 1300;
-
 		scene = new THREE.Scene();
 
 		var geometry = new THREE.CubeGeometry(300, 300, 300);
@@ -71,9 +61,7 @@ function renderToggler() {
 		squareGeometry.faces.push(new THREE.Face3(0, 2, 3));
 		
 		material = new THREE.MeshBasicMaterial({ color:0xff6666, side:THREE.DoubleSide, wireframe: true });
-		
 		squareMesh = new THREE.Mesh( squareGeometry, material );				
-		
 		scene.add( squareMesh )
 
 		renderer = new THREE.CanvasRenderer();
@@ -84,11 +72,9 @@ function renderToggler() {
 		renderer.domElement.style.position = 'inherit';
 		renderer.domElement.style.bottom = '12px';
 		renderer.domElement.style.left = '38px';
-
 	}
 
 	function animate() {
-	
 		var speed = toggleHover ? 5 : 1
 	
 		requestAnimationFrame(animate);
@@ -100,13 +86,10 @@ function renderToggler() {
 		squareMesh.rotation.z -= 0.01 * speed;
 
 		renderer.render(scene, camera);
-
 	}
-
 }
 
 function render3d() {
-	
 	var container, stats;
 	var camera, following, scene, renderer, materialDepth;
 	var mainTextMesh, earthMesh, emailMesh, facebookMesh, linkedinMesh, cameraMesh, beansMesh;
@@ -123,9 +106,7 @@ function render3d() {
 	var sc = 12;
 	var d;
 	
-	
 	// variables and functions to be controlled with dat.gui
-	
 	var variablesController = {
 		bgColor: '#112266',
 		lightIntensity: 0.93,
@@ -162,46 +143,34 @@ function render3d() {
 	var postprocessing = { enabled : variablesController.postprocessing };
 	var hoverColor = variablesController.hoverColor;
 	
-	
 	// do the magic
-	
 	init();
 	animate();
 	
 	
 	// apply values from the variable controller on render
-	
 	function updateVariables() {
-	
 		renderer.setClearColor( variablesController.bgColor, 1 );
 		postprocessing.godrayCombineUniforms.fGodRayIntensity.value = variablesController.lightIntensity;
 		postprocessing.enabled = variablesController.postprocessing;
 		hoverColor = variablesController.hoverColor;
-	
 	}
 	
-
 	function init() {
-		
 		container = document.createElement( 'div' );
 		document.body.appendChild( container );
 
 		// camera
-
 		camera = new THREE.PerspectiveCamera( 70, window.innerWidth / height, 1, 3000 );
 		camera.position.x = -80;
 		camera.position.y = -1;
 		camera.position.z = 140;
-		
 		camera.originalPosition = new THREE.Vector3(-80, 1, 140);
 
 		scene = new THREE.Scene();
-		
 		following = scene;
 		
-		
 		// renderer
-
 		renderer = new THREE.WebGLRenderer( { antialias: true } );
 		renderer.setSize( window.innerWidth, height );
 		container.appendChild( renderer.domElement );
@@ -216,19 +185,14 @@ function render3d() {
 		renderer.domElement.style.left = "0";
 		renderer.domElement.style.top = "0";
 		
-		
 		// lighting
-		
 		var pointLight = new THREE.PointLight('#ffffaa', 0.75);
 		pointLight.position = sunPosition;
 		scene.add(pointLight);
-		
 		var centerLight = new THREE.PointLight('#ffffaa', 0.05);
 		scene.add(centerLight);
 		
-		
 		// materials
-		
 		materialDepth = new THREE.MeshDepthMaterial();
 		
 		var mainTextMaterial = new THREE.MeshLambertMaterial({ 
@@ -283,14 +247,11 @@ function render3d() {
 		});
 		beansMaterial.originalEmissive = beansMaterial.emissive.getHex();
 
-		
 		//geometries
-		
 		var geo;
 		var loader = new THREE.JSONLoader();
 		
 		// main text
-		
 		geo = new THREE.TextGeometry('JGRIFF.IN', {	font: 'fjalla one' });
 		mainTextMesh = new THREE.Mesh(geo, mainTextMaterial);
 		mainTextMesh.position.set(-62, -5, 0);
@@ -299,7 +260,6 @@ function render3d() {
 		scene.add(mainTextMesh);
 		
 		// 1. photography
-
 		loader.load( "js/camera.js", function( geometries ) {
 			cameraMesh = new THREE.Mesh(geometries, materialPhotography);
 			cameraMesh.scale.set( sc*5, sc*5, sc*5 );
@@ -311,7 +271,6 @@ function render3d() {
 		} );
 		
 		// 2. social
-
 		geo = new THREE.SphereGeometry(1, 46, 24);
 		earthMesh = new THREE.Mesh(geo, earthMaterial);
 		earthMesh.scale.set( sc/1.4, sc/1.4, sc/1.4 );
@@ -321,7 +280,6 @@ function render3d() {
 		interactables.push(earthMesh);
 		
 		// 2.1 email
-		
 		geo = new THREE.SphereGeometry(1, 24, 24);
 		emailMesh = new THREE.Mesh(geo, materialEmail);
 		emailMesh.scale.set( sc/2, sc/2, sc/2 );
@@ -333,7 +291,6 @@ function render3d() {
 		interactables.push(emailMesh);
 		
 		// 2.2 facebook
-		
 		geo = new THREE.SphereGeometry(1, 24, 24);
 		facebookMesh = new THREE.Mesh(geo, materialFacebook);
 		facebookMesh.scale.set( sc/2, sc/2, sc/2 );
@@ -345,7 +302,6 @@ function render3d() {
 		interactables.push(facebookMesh);
 		
 		// 2.3 linkedin
-		
 		geo = new THREE.SphereGeometry(1, 24, 24);
 		linkedinMesh = new THREE.Mesh(geo, materialLinkedin);
 		linkedinMesh.scale.set( sc/2, sc/2, sc/2 );
@@ -366,19 +322,15 @@ function render3d() {
 		scene.add(beansMesh);
 		interactables.push(beansMesh);
 		
-		
 		// lens flare
-		
 		// a crude way of detecting devices that can't handle too many textures
 		if ( height > 800 && width > 800 ) {
-		
 			var sunflare = THREE.ImageUtils.loadTexture( "textures/sun.png" );
 			var lineflare = THREE.ImageUtils.loadTexture( "textures/line.png" );
 			var hexagonflare = THREE.ImageUtils.loadTexture( "textures/hexagon.png" );
 			var ghostflare = THREE.ImageUtils.loadTexture( "textures/ghost.png" );
 
 			var flareColor = new THREE.Color( 0x161308 );
-
 			lensFlare = new THREE.LensFlare( sunflare, 500, 0.0, THREE.SubtractiveBlending, flareColor );
 
 			lensFlare.add( lineflare, 3000, 0.0, THREE.AdditiveBlending, flareColor );
@@ -393,103 +345,68 @@ function render3d() {
 			lensFlare.position = sunPosition;
 
 			scene.add( lensFlare );
-		
 		}
 		
-		
 		// stats
-
 		stats = new Stats();
 		container.appendChild( stats.domElement );
 		
-
 		// listeners
-
 		document.addEventListener( 'touchstart', onDocumentTouchStart, false );
 		document.addEventListener( 'touchmove', onDocumentTouchMove, false );
 		document.addEventListener( 'touchend', onDocumentTouchEnd, false );
-		
 		document.addEventListener( 'mousedown', onDocumentMouseDown, false );
 		document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 		document.addEventListener( 'mouseup', onDocumentMouseUp, false );
-		
 		window.addEventListener( 'resize', onWindowResize, false );
 		
-
 		/* // variables			
-		
 		var gui = new dat.GUI();
 		
 		gui.addColor(variablesController, 'bgColor').onChange(updateVariables);
 		gui.addColor(variablesController, 'hoverColor').onChange(updateVariables);
 		gui.add(variablesController, 'lightIntensity', 0.8, 1.2).onChange(updateVariables);
-		
 		gui.add(variablesController, 'postprocessing').onChange(updateVariables);
 		
 		var cameraControls = gui.addFolder('Camera Controls');
-		
 		cameraControls.add(variablesController, 'resetCamera').onChange(updateVariables);
 		cameraControls.add(variablesController, 'wideCamera').onChange(updateVariables);
 		cameraControls.add(variablesController, 'topDownCamera').onChange(updateVariables);
 		cameraControls.add(variablesController, 'followSocial').onChange(updateVariables);
 		cameraControls.add(variablesController, 'followPhotography').onChange(updateVariables);
 		cameraControls.add(variablesController, 'followBeans').onChange(updateVariables);
-		
 		*/
 		
-		
 		// pp
-		
 		initPostprocessing();
-
 	}
 	
 	
 	// ray casting to see what's being clicked/touched
-	
 	function getIntersects( event, touch ) {
-	
 		var clientX, clientY;
-		
 		if(touch){
-		
 			clientX = event.touches[0].clientX;
 			clientY = event.touches[0].clientY;
-			
 		}
 		else {
-		
 			clientX = event.clientX;
 			clientY = event.clientY;
-			
 		}
-		
 		rayVector.set( ( clientX / window.innerWidth ) * 2 - 1, - ( clientY / window.innerHeight ) * 2 + 1, 0.5 );
 		projector.unprojectVector( rayVector, camera );
-		
 		raycaster.set( camera.position, rayVector.sub( camera.position ).normalize() );
-		
 		return raycaster.intersectObjects( interactables );
-		
 	}
 	
-
 	// clicks
-	
 	function onDocumentMouseDown( event, touch ) {
-	
 		event.preventDefault();
-		
 		if (viewing3d) {
-		
 			grabbing = true;
-			
 			var intersects = getIntersects(event, touch);
-
 			if ( intersects.length > 0 ) {
-			
 				var clickedObject = intersects[0].object;
-				
 				switch(clickedObject.subcategory) {
 					case "photography":
 						document.location.href = "/photography";
@@ -512,118 +429,78 @@ function render3d() {
 						break;
 				}
 			}
-		
 		}
-	
 	}
 	
-	
 	function onDocumentMouseUp( event ) {
-	
 		event.preventDefault();
-	
 		grabbing = false;
-	
 	}
 	
 	
 	// hovers
 	
 	function onDocumentMouseMove( event, touch ) {
-	
 		event.preventDefault();
-		
 		touch ? setXY(event, true) : setXY(event, false);
-		
 		var intersects = getIntersects(event, touch);
-		
 		if ( intersects.length > 0 ) {
-		
 			hoveringObject = intersects[0].object;
-			
 			// on hover...
 			if(!hovering) {
-			
 				// if this is the earth, make the moons visible
 				if ( hoveringObject.subcategory == "social"
 					|| (hoveringObject.caterory == "social" && hoveringObject.subcategory != "social" && socialNodesVisible) )
 					setNodesVisible(true);
-				
 				// if the moons are visible, don't let that stop us from
 				// highlighting other objects while the moons' timer ticks away
 				if ( !(hoveringObject.category == "social" && hoveringObject.subcategory != "social" && !socialNodesVisible) ) {
 					hovering = true;
 					hoveringObject.material.emissive.multiply(new THREE.Color(hoverColor)).multiplyScalar(3);
 				}
-				
 			}
-			
 			// restart timer
 			if (hoveringObject.category == "social")
 				d = Date.now();
-				
 			// change to pointy cursor
 			container.style.cursor = 'pointer';
-			
 		}
 		else {
-		
 			// on un-hover...
 			if (hovering)
 				hoveringObject.material.emissive.set(hoveringObject.material.originalEmissive);
-								
 			hovering = false;
-			
 			// change back to normal cursor
 			container.style.cursor = 'auto';
-			
 		}
 	}
 	
-	
 	function setNodesVisible( b ) {
-	
 		facebookMesh.visible = b;
 		emailMesh.visible = b;
 		linkedinMesh.visible = b;
 		socialNodesVisible = b;
-		
 	}
-	
 	
 	function onDocumentTouchStart( event ) {
-	
 		if ( event.touches.length === 1 ) {
-		
 			event.preventDefault();
 			onDocumentMouseDown(event, true);
-			
 		}
-		
 	}
-
 	
 	function onDocumentTouchMove( event ) {
-	
 		if ( event.touches.length === 1 ) {
-		
 			event.preventDefault();
 			onDocumentMouseMove(event, true);
-			
 		}
-		
 	}
-	
 	
 	function onDocumentTouchEnd( event ) {
-	
 		onDocumentMouseUp(event);
-	
 	}
 	
-	
 	function setXY ( event, touch ) {
-	
 		if(touch) {
 			mouseX = event.touches[0].pageX - windowHalfX;
 			mouseY = event.touches[0].pageY - windowHalfY;
@@ -632,24 +509,16 @@ function render3d() {
 			mouseX = event.pageX - windowHalfX;
 			mouseY = event.pageY - windowHalfY;
 		}
-	
 	}
-	
 	
 	function onWindowResize() {
-	
 		camera.aspect = window.innerWidth / window.innerHeight;
 		camera.updateProjectionMatrix();
-		
 		renderer.setSize( window.innerWidth, window.innerHeight );
-		
 	}
-	
 
 	function initPostprocessing() {
-
 		postprocessing.scene = new THREE.Scene();
-
 		postprocessing.camera = new THREE.OrthographicCamera( window.innerWidth / - 2,
 																window.innerWidth / 2, 
 																height / 2,
@@ -657,7 +526,6 @@ function render3d() {
 																-10000,
 																10000 );
 		postprocessing.camera.position.z = 100;
-
 		postprocessing.scene.add( postprocessing.camera );
 
 		var pars = { minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, alpha: true };
@@ -669,36 +537,29 @@ function render3d() {
 
 		// I would have this quarter size and use it as one of the ping-pong render
 		// targets but the aliasing causes some temporal flickering
-
 		postprocessing.rtTextureDepth = new THREE.WebGLRenderTarget( window.innerWidth, height, pars );
 
 		// Aggressive downsize god-ray ping-pong render targets to minimize cost
-
 		var w = window.innerWidth / 4.0;
 		var h = height / 4.0;
 		postprocessing.rtTextureGodRays1 = new THREE.WebGLRenderTarget( w, h, pars );
 		postprocessing.rtTextureGodRays2 = new THREE.WebGLRenderTarget( w, h, pars );
 
 		// god-ray shaders
-
 		var godraysGenShader = THREE.ShaderGodRays[ "godrays_generate" ];
 		postprocessing.godrayGenUniforms = THREE.UniformsUtils.clone( godraysGenShader.uniforms );
 		postprocessing.materialGodraysGenerate = new THREE.ShaderMaterial( {
-
 			uniforms: postprocessing.godrayGenUniforms,
 			vertexShader: godraysGenShader.vertexShader,
 			fragmentShader: godraysGenShader.fragmentShader
-
 		} );
 
 		var godraysCombineShader = THREE.ShaderGodRays[ "godrays_combine" ];
 		postprocessing.godrayCombineUniforms = THREE.UniformsUtils.clone( godraysCombineShader.uniforms );
 		postprocessing.materialGodraysCombine = new THREE.ShaderMaterial( {
-
 			uniforms: postprocessing.godrayCombineUniforms,
 			vertexShader: godraysCombineShader.vertexShader,
 			fragmentShader: godraysCombineShader.fragmentShader
-
 		} );
 
 		postprocessing.godrayCombineUniforms.fGodRayIntensity.value = lightIntensity;
@@ -706,36 +567,26 @@ function render3d() {
 		postprocessing.quad = new THREE.Mesh( new THREE.PlaneGeometry( window.innerWidth, height ), postprocessing.materialGodraysGenerate );
 		postprocessing.quad.position.z = -9900;
 		postprocessing.scene.add( postprocessing.quad );
-		
 	}
 	
 	
 	function followObject (object, offsetX, offsetY, offsetZ) {
-	
 		following = object;
-		
 		camera.position.set(object.position.x + offsetX, object.position.y + offsetY, object.position.z + offsetZ);
 		camera.lookAt(object);
-		
 	}
 	
 
 	function animate() {
-
 		requestAnimationFrame( animate, renderer.domElement );
-
 		render();
 		stats.update();
-
 	}
 
 
 	function render() {
-	
 		//updateVariables();
-		
 		hovering ? time += slowModifier : time += normalModifier;
-		
 		if (Date.now() >= d + 4000 && !hovering)
 			setNodesVisible(false);
 		
@@ -743,37 +594,29 @@ function render3d() {
 		orbit(earthMesh, scene, 71, 1, "cw", "xz", 0, 0, 0, 0);
 		orbit(cameraMesh, scene, 101, 1, "cw", "xz", 2, 0, 0, 0);
 		orbit(beansMesh, scene, 131, 1, "cw", "xz", 4.2, 0, 15, 0);
-		
 		orbit(emailMesh, earthMesh, 20, 3, "cw", "xy", 0, 0, 0, 0);
 		orbit(facebookMesh, earthMesh, 20, 3, "cw", "xy", 0.666, 0, 0, 0);
 		orbit(linkedinMesh, earthMesh, 20, 3, "cw", "xy", 1.333, 0, 0, 0);
 		
 		beansMesh.rotation.x += 0.01;
 		beansMesh.rotation.z += 0.012;
-		
 		cameraMesh.rotation.x += 0.002;
 		cameraMesh.rotation.y += 0.002;
 		cameraMesh.rotation.z += 0.002;
-		
 		earthMesh.rotation.y += 0.015;
 		
 		if (grabbing) {
-		
 			camera.position.x += ( mouseX/8 - camera.position.x ) * 0.005;
 			camera.position.y += ( - ( mouseY/12 ) - camera.position.y ) * 0.01;
-			
 		}
 		else {
-		
 			camera.position.x -= (camera.position.x - camera.originalPosition.x) * 0.01;
 			camera.position.y -= (camera.position.y - camera.originalPosition.y) * 0.02;
-			
 		}
 
 		camera.lookAt( following.position );
 
 		if ( postprocessing.enabled ) {
-
 			// Find the screenspace position of the sun
 			screenSpacePosition.copy( sunPosition );
 			projector.projectVector( screenSpacePosition, camera );
@@ -847,48 +690,32 @@ function render3d() {
 
 			renderer.render( postprocessing.scene, postprocessing.camera );
 			postprocessing.scene.overrideMaterial = null;
-
-
 		} else {
-
 			renderer.clear();
 			renderer.render( scene, camera );
-
 		}
 		
-		
 		// TODO: get rid of the hack
-		
 		function orbit( satellite, toOrbit, distance, speed, direction, axes, circularOffset, xFix, yFix, zFix ) {
-		
 			var cosRotation = Math.cos((time + circularOffset) * speed);
 			var sinRotation = Math.sin((time + circularOffset) * speed);
 				
 			if ( direction == "acw") {
-			
 				cosRotation = -cosRotation;
 				sinRotation = -sinRoataion;
-				
 			}
 			
 			if (axes == "xz") {
-				
 				satellite.position.x = toOrbit.position.x + xFix + cosRotation * distance;
 				satellite.position.y = yFix + (25 * Math.sin( time * speed ));	// this is a HACK to get things to move up and down.
 				satellite.position.z = toOrbit.position.z + zFix + sinRotation * distance;
-				
 			}
 			else if (axes == "xy") {
-			
 				satellite.position.x = toOrbit.position.x + xFix + cosRotation * distance;
 				satellite.position.y = toOrbit.position.y + yFix + sinRotation * distance;
 				satellite.position.z = toOrbit.position.z + zFix;
-
 			}
 		}
-
 	}
-	
 }
 
-
